@@ -52,13 +52,16 @@ async function tryDecrypt(pw){
  return new TextDecoder().decode(pt);
 }
 function render(html){ sessionStorage.setItem("hr_pw","1"); document.open(); document.write(html); document.close(); }
+function secureOK(){return window.isSecureContext && window.crypto && crypto.subtle;}
 async function go(pw,silent){
  const b=document.getElementById("b"),m=document.getElementById("m");
+ if(!secureOK()){ if(m)m.innerHTML='&#128274; 보안 연결(HTTPS)이 필요합니다.<br>주소창을 <b>https://</b> 로 바꿔 접속하세요.'; return; }
  if(b){b.disabled=true;} if(m){m.textContent="";}
  try{ const html=await tryDecrypt(pw); render(html); }
  catch(e){ if(!silent&&m)m.textContent="암호가 올바르지 않습니다."; if(b)b.disabled=false; }
 }
 document.getElementById("f").addEventListener("submit",e=>{e.preventDefault();go(document.getElementById("pw").value,false);});
+if(!secureOK()){var _m=document.getElementById("m");if(_m)_m.innerHTML="&#128274; 보안 연결(HTTPS)이 필요합니다.<br>주소창을 <b>https://</b> 로 바꿔 접속하세요.";var _b=document.getElementById("b");if(_b)_b.disabled=true;}
 </script>'''
 
 def main():
