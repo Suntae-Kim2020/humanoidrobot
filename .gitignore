@@ -1,0 +1,14 @@
+# secrets
+.epo_ops_secrets.env
+*.env
+# local tooling
+.claude/
+__pycache__/
+*.pyc
+*.ckpt
+*.log
+terms_and_conditions_OPS*.pdf
+# plaintext content — keep local only, never publish (dashboard is password-gated)
+results/
+data/
+src/dashboard_template.html
