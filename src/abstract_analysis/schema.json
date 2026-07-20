@@ -1,0 +1,97 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "is_humanoid_robotics", "is_engineering_research", "task", "methods", "platform_type", "hardware_named",
+    "data_used", "data_generated", "data_generated_desc", "benchmark_new",
+    "contribution_type", "maturity", "openness", "application_domain", "confidence"
+  ],
+  "properties": {
+    "is_humanoid_robotics": {
+      "type": "boolean",
+      "description": "Relevance gate 1: true only if the paper is genuinely about humanoid / bipedal / legged ROBOTS. False for paleoanthropology, human anatomy/biomechanics, bioethics essays, pure computer-animation, or other non-robot uses of 'bipedal'/'humanoid'. If false, other fields may be left at their absence values."
+    },
+    "is_engineering_research": {
+      "type": "boolean",
+      "description": "Relevance gate 2: true only if this is an ENGINEERING / technical RESEARCH contribution about the robot itself (control, learning, hardware, perception, planning, systems). False for business/management/supply-chain/marketing studies, adoption/acceptance or trust surveys, policy/ethics/waste essays, promotional white papers, and forensic/anatomy studies — even when the abstract is tagged Engineering/CS and mentions humanoid robots. A review/survey OF robot technology is still engineering research (true); a market/adoption study is not (false)."
+    },
+    "task": {
+      "type": "string",
+      "description": "Primary robotics task the paper addresses.",
+      "enum": ["locomotion", "whole_body_control", "manipulation", "grasping",
+               "loco_manipulation", "perception", "state_estimation", "planning",
+               "human_robot_interaction", "hardware_design", "sim_platform",
+               "learning_method", "survey", "other"]
+    },
+    "methods": {
+      "type": "array",
+      "description": "Technical methods used (multi-label).",
+      "items": {
+        "type": "string",
+        "enum": ["reinforcement_learning", "imitation_learning", "model_predictive_control",
+                 "optimal_control", "classical_control", "state_estimation_filter",
+                 "diffusion_policy", "vision_language_action", "large_language_model",
+                 "teleoperation", "sim_to_real_transfer", "supervised_deep_learning",
+                 "optimization", "analytical_model", "other"]
+      }
+    },
+    "platform_type": {
+      "type": "string",
+      "description": "Where the work was validated.",
+      "enum": ["real_robot", "simulation_only", "sim_to_real", "hybrid", "none"]
+    },
+    "hardware_named": {
+      "type": ["string", "null"],
+      "description": "Named robot/hardware platform if any (e.g. 'Unitree G1', '19-DOF tendon hand'); null if none."
+    },
+    "data_used": {
+      "type": "array",
+      "description": "Data sources the paper consumes (multi-label).",
+      "items": {
+        "type": "string",
+        "enum": ["motion_capture", "teleoperation", "simulation", "real_robot_logs",
+                 "human_video", "public_dataset", "proprioceptive_sensors",
+                 "model_based_no_data", "none", "other"]
+      }
+    },
+    "data_generated": {
+      "type": "boolean",
+      "description": "Does the paper create/release a new dataset or corpus?"
+    },
+    "data_generated_desc": {
+      "type": ["string", "null"],
+      "description": "One-line description of the generated data (size/modality) if data_generated=true, else null."
+    },
+    "benchmark_new": {
+      "type": "boolean",
+      "description": "Does the paper propose a new benchmark/evaluation protocol?"
+    },
+    "contribution_type": {
+      "type": "string",
+      "description": "The dominant claimed contribution.",
+      "enum": ["new_algorithm", "system_integration", "dataset", "theory",
+               "survey", "empirical_study", "hardware", "other"]
+    },
+    "maturity": {
+      "type": "string",
+      "description": "TRL-proximate maturity of the demonstrated result.",
+      "enum": ["concept", "simulation", "lab_demo", "deployment"]
+    },
+    "openness": {
+      "type": "string",
+      "description": "Code/data release stated in the abstract.",
+      "enum": ["code_released", "data_released", "both", "none", "unclear"]
+    },
+    "application_domain": {
+      "type": "string",
+      "description": "Target application domain.",
+      "enum": ["industrial", "service", "medical_rehab", "research",
+               "entertainment", "defense", "general", "other"]
+    },
+    "confidence": {
+      "type": "string",
+      "description": "Extractor confidence given only the abstract.",
+      "enum": ["high", "medium", "low"]
+    }
+  }
+}
